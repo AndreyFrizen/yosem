@@ -7,6 +7,8 @@ import (
 	"yosem/internal/lib/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 )
 
 func main() {
@@ -24,4 +26,12 @@ func main() {
 		log.Error("Not connected to database")
 	}
 	defer pool.Close()
+
+	e := echo.New()
+	e.Use(middleware.RequestLogger())
+	e.Use(middleware.Recover())
+
+	if err := e.Start(":1323"); err != nil {
+		e.Logger.Error("failed to start server", "error", err)
+	}
 }
