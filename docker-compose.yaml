@@ -27,9 +27,6 @@ services:
       - internal
     depends_on:
       - backend
-    security_opt:
-      - no-new-privileges:true
-    read_only: true
     tmpfs:
       - /var/cache/nginx
       - /var/run
@@ -37,4 +34,3 @@ services:
 networks:
   internal:
     driver: bridge
-    internal: true
